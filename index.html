@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consumo de Electricidad</title>    
+    <style>
+        body
+        {
+            background-color: #663399;
+        }
+        h3
+        {
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            color: #663399;
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 10px;    
+        }
+        .marco
+        {
+            border-radius: 10px;
+            border-color:darkgray;
+            margin: 20px;
+            padding: 10px;
+            background-color:azure;
+            display: flexbox;
+            justify-content: center;
+            min-width: 200px;
+            max-width: 600px;
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%);    
+        }
+        .contenedor
+        {
+            display: flex;    
+            margin-bottom: 5px;
+            align-items: center;    
+            padding-left: 2px;
+            padding-right: 2px;
+            padding-top: 1px;
+            padding-bottom: 1px;
+            border-radius: 2px;
+        }
+        input
+        {
+            color: #663399;
+            font-size: 18px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            border: 1px solid #663399;
+            background-color: azure;
+            
+            border-radius: 10px;
+            margin: 10px;
+            height: 30px;
+            -moz-appearance: none;
+        }
+        input[type=number]::-webkit-outer-spin-button,
+        input[type=number]::-webkit-inner-spin-button
+        {
+            -webkit-appearance: none;
+        }
+
+        input[type=button]
+        {
+            width: 100px;
+            margin: auto;
+            background-color: #663399;
+            color: azure;    
+        }
+
+        input[type=button]:hover
+        {
+            transition: all 0.5s ease;   
+            width: 160px;   
+        }
+        input[type=button]:active
+        {
+            transition: all 0.1s ease;
+            color: #663399;   
+            background-color: azure;    
+        }
+        input[type=number]:focus
+        {
+            transition: all 0.1s ease;
+            color: azure;   
+            background-color: #663399;  
+            border-color: #663399;  
+        }
+        .separador
+        {
+            width: 10px;
+            background-color: #663399;
+        }
+
+        p
+        {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #663399;
+            font-size: 18px;
+            margin-left: 10px;
+        }
+        .respuesta
+        {
+            font-size: 0px;
+            text-align: center;
+            transition: all 0.5s ease;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="marco" id="marco">
+        <h3>Lectura del Metrocontador</h3>
+        <div class="contenedor">            
+            <p>Inicial:</p>
+            <input id="inicial" type="number" name="LecturaInicial" min="0" max="99999" ></input>
+
+            <div class="separador"></div>
+
+            <p>Final:</p>
+            <input id="final" type="number" name="LecturaFinal" min="0" max="99999"></input>
+        </div>
+        
+        <div class="contenedor">            
+            <input type="button" value="Calcular" onclick="calcular(max,min)"></input>
+        </div>
+        <div>
+            <p class="respuesta" id="resp">Su consumo es de <span id="cosum">0</span>, debe pagar <span id="dinero">0</span> cup</p>
+        </div>
+    </div>
+
+    <script>
+        const inicial=document.getElementById("inicial");
+        const final=document.getElementById("final");
+        const cont=document.getElementById("marco");
+        const respuesta=document.getElementById("resp")
+        var min=0;
+        var max=0;
+        var consumo=0;
+
+        
+        function calcular(max,min)
+        {
+            min = parseInt(inicial.value)
+            max = parseInt(final.value)
+            consumo=max-min;
+            console.log(consumo);
+            console.log(respuesta);
+            if (consumo>0)
+            {
+                precio(consumo);
+                document.getElementById("cosum").textContent=consumo;
+                document.getElementById("dinero").textContent=precio(consumo);
+                setTimeout(mostrar,100);
+                setTimeout(ocultar,10000);
+            }
+            else{alert("La lectura inicial debe ser menor que la final")}             
+        }
+
+        function mostrar(){respuesta.style.fontSize="14px"}
+        function ocultar(){respuesta.style.fontSize="0px"}
+
+        function precio(consumo)
+        {
+            var num;
+           if (consumo < 101)
+           {
+            num = consumo*0.33
+            console.log("Consumo: "+ num.toFixed(2) +" $");
+           }
+           if (consumo > 100 && consumo<151)
+           {
+            num = (consumo-100)*1.07+33
+            console.log("Consumo: "+ num.toFixed(2) +" $");
+           }
+           if (consumo > 150 && consumo<201)
+           {
+            num = (consumo-150)*1.43 + 68.50
+            console.log("Consumo: "+ num.toFixed(2) +" $");
+           }
+           if (consumo > 200 && consumo<251)
+           {
+            num = (consumo-200)*2.46 + 158
+            console.log("Consumo: "+ num.toFixed(2) +" $");
+           }
+           if (consumo > 250 && consumo<301)
+           {
+            num = (consumo-250)*3 + 281
+            console.log("Consumo: "+ num.toFixed(2) +" $");
+           }
+           if (consumo > 300 && consumo<351)
+           {
+            num = (consumo-300)*4 + 431;
+            console.log("Consumo: "+ num.toFixed(2) +" $");
+           }
+           if (consumo > 350 && consumo<401)
+           {
+            num = (consumo-350)*5 + 631;
+            console.log("Consumo: "+ num.toFixed(2) +" $");
+           }
+           if (consumo > 400 && consumo<451)
+           {
+            num = (consumo-400)*6 + 881;
+            console.log("Consumo: "+ num.toFixed(2) +" $");
+           }
+           if (consumo > 450 && consumo<501)
+           {
+            num = (consumo-450)*7 + 1181;
+            console.log("Consumo: "+ num.toFixed(2) +" $");
+           }
+           if (consumo > 500 && consumo<601)
+           {
+            num = (consumo-500)*9.2 + 1531;
+            console.log("Consumo: "+ num.toFixed(2) +" $");
+           }
+           if (consumo > 600 && consumo<701)
+           {
+            num = (consumo-600)*9.45 + 2451;
+            console.log("Consumo: "+ num.toFixed(2) +" $");
+           }
+           if (consumo > 700 && consumo<1001)
+           {
+            num = (consumo-700)*9.85 + 3396;
+            console.log("Consumo: "+ num.toFixed(2) +" $");
+           }
+           if (consumo > 1000 && consumo<1801)
+           {
+            num = (consumo-1000)*10.8 + 6351;
+            console.log("Consumo: "+ num.toFixed(2) +" $");
+           }
+           if (consumo > 1800 && consumo<2601)
+           {
+            num = (consumo-1800)*11.8 + 14991;
+            console.log("Consumo: "+ num.toFixed(2) +" $");
+           }
+           if (consumo > 2600)
+           {
+            num = "muchos";
+            console.log("SE TE FUE LA MANO "+ num);
+           }
+           return num;
+
+        }
+        
+        
+   </script>
+</body>
+
+</html>
+
